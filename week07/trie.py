@@ -7,41 +7,37 @@ class Trie:
         """
         Initialize your data structure here.
         """
-        self.tree = {}
+        self.root = {}
 
     def insert(self, word):
         """
         Inserts a word into the trie.
         """
-        tree = self.tree
+        node = self.root
         for letter in word:
-            if letter not in tree:
-                tree[letter] = {}
-            tree = tree[letter]
-        tree["$"] = "$"
+            node = node.setdefault(letter, {})
+        node["$"] = "$"
 
     def search(self, word):
         """
         Returns if the word is in the trie.
         """
-        tree = self.tree
+        node = self.root
         for letter in word:
-            if letter not in tree:
+            if letter not in node:
                 return False
-            tree = tree[letter]
-        if "$" in tree:
-            return True
-        return False
+            node = node[letter]
+        return "$" in node
 
     def starts_with(self, prefix):
         """
         Returns if there is any word in the trie that starts with the given prefix.
         """
-        tree = self.tree
+        node = self.root
         for letter in prefix:
-            if letter not in tree:
+            if letter not in node:
                 return False
-            tree = tree[letter]
+            node = node[letter]
         return True
 
 
